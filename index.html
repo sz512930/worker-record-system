@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="工作人员记录表前端原型——登记并在本机浏览器中管理工作人员资料。"
+    />
+    <title>工作人员记录表</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="工作人员记录表首页">
+          <span class="brand-mark" aria-hidden="true">人</span>
+          <span>
+            <strong>工作人员记录表</strong>
+            <small>前端流程验证原型</small>
+          </span>
+        </a>
+        <nav class="main-nav" aria-label="主要导航">
+          <a class="active" href="index.html">资料登记</a>
+          <a href="admin.html">人员管理</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-shell form-page">
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">STAFF PROFILE</p>
+          <h1 id="page-title">填写工作人员资料</h1>
+          <p id="page-description">请按区域填写信息，带 <span class="required-mark">*</span> 的项目为必填项。</p>
+        </div>
+        <span id="api-status" class="status-pill">正在检查本机 API…</span>
+      </section>
+
+      <form id="staff-form" novalidate>
+        <input id="record-id" name="recordId" type="hidden" />
+
+        <section class="form-card" aria-labelledby="basic-title">
+          <div class="section-heading">
+            <span class="section-number">01</span>
+            <div>
+              <h2 id="basic-title">基础资料</h2>
+              <p>用于识别与联系工作人员</p>
+            </div>
+          </div>
+          <div class="form-grid">
+            <label class="field">
+              <span>姓名 <b aria-hidden="true">*</b></span>
+              <input id="name" name="name" type="text" placeholder="例如：张三" autocomplete="name" required maxlength="30" />
+            </label>
+            <label class="field">
+              <span>性别 <b aria-hidden="true">*</b></span>
+              <select id="gender" name="gender" required>
+                <option value="">请选择</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>年龄 <b aria-hidden="true">*</b></span>
+              <input id="age" name="age" type="number" min="16" max="100" placeholder="例如：28" required />
+            </label>
+            <label class="field">
+              <span>联系电话</span>
+              <input id="phone" name="phone" type="tel" placeholder="请输入联系电话" autocomplete="tel" maxlength="30" />
+            </label>
+            <label class="field field-wide">
+              <span>所在城市 <b aria-hidden="true">*</b></span>
+              <input id="city" name="city" type="text" placeholder="例如：成都" required maxlength="50" />
+            </label>
+          </div>
+        </section>
+
+        <section class="form-card" aria-labelledby="work-title">
+          <div class="section-heading">
+            <span class="section-number">02</span>
+            <div>
+              <h2 id="work-title">工作信息</h2>
+              <p>记录当前岗位与任职情况</p>
+            </div>
+          </div>
+          <div class="form-grid">
+            <label class="field">
+              <span>部门 <b aria-hidden="true">*</b></span>
+              <select id="department" name="department" required>
+                <option value="">请选择</option>
+                <option value="行政">行政</option>
+                <option value="运营">运营</option>
+                <option value="销售">销售</option>
+                <option value="技术">技术</option>
+                <option value="设计">设计</option>
+                <option value="其他">其他</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>职位 <b aria-hidden="true">*</b></span>
+              <input id="position" name="position" type="text" placeholder="例如：运营专员" required maxlength="50" />
+            </label>
+            <label class="field">
+              <span>级别 <b aria-hidden="true">*</b></span>
+              <select id="level" name="level" required>
+                <option value="">请选择</option>
+                <option value="实习">实习</option>
+                <option value="初级">初级</option>
+                <option value="中级">中级</option>
+                <option value="高级">高级</option>
+                <option value="负责人">负责人</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>入职时间 <b aria-hidden="true">*</b></span>
+              <input id="join-date" name="joinDate" type="date" required />
+            </label>
+          </div>
+        </section>
+
+        <section class="form-card" aria-labelledby="intro-title">
+          <div class="section-heading">
+            <span class="section-number">03</span>
+            <div>
+              <h2 id="intro-title">个人介绍</h2>
+              <p>帮助管理人员快速了解个人能力</p>
+            </div>
+          </div>
+          <div class="form-grid single-column">
+            <label class="field">
+              <span>个人简介</span>
+              <textarea id="introduction" name="introduction" rows="5" placeholder="简要介绍工作经历、擅长方向或个人特点……" maxlength="600"></textarea>
+              <small class="field-note"><span id="intro-count">0</span>/600 字</small>
+            </label>
+            <label class="field">
+              <span>技能标签</span>
+              <input id="skills" name="skills" type="text" placeholder="例如：运营、剪辑、设计（使用逗号分隔）" maxlength="150" />
+              <small class="field-note">多个技能可用中文或英文逗号分隔</small>
+            </label>
+          </div>
+        </section>
+
+        <section class="form-card" aria-labelledby="file-title">
+          <div class="section-heading">
+            <span class="section-number">04</span>
+            <div>
+              <h2 id="file-title">文件资料</h2>
+              <p>文件会上传至本机私有对象存储，头像预览只在当前页面临时显示</p>
+            </div>
+          </div>
+          <div class="upload-grid">
+            <div class="upload-panel">
+              <div id="avatar-preview" class="avatar-preview" aria-label="头像预览">
+                <span id="avatar-placeholder">头像</span>
+                <img id="avatar-image" alt="已选择的头像预览" hidden />
+              </div>
+              <div>
+                <h3>个人头像</h3>
+                <p>支持 JPG、PNG 或 WebP，建议小于 2MB</p>
+                <label class="file-button" for="avatar">选择图片</label>
+                <input id="avatar" name="avatar" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" />
+                <span id="avatar-file-name" class="file-name">尚未选择</span>
+              </div>
+            </div>
+            <div class="upload-panel resume-panel">
+              <div class="file-icon" aria-hidden="true">DOC</div>
+              <div>
+                <h3>个人简历</h3>
+                <p>选择 PDF、Word 或常见文本文件</p>
+                <label class="file-button" for="resume">选择文件</label>
+                <input id="resume" name="resume" class="visually-hidden" type="file" accept=".pdf,.doc,.docx,.txt,.rtf" />
+                <span id="resume-file-name" class="file-name">尚未选择</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="form-actions">
+          <p><span aria-hidden="true">●</span> 数据仅在本机服务中保存</p>
+          <div>
+            <a id="cancel-edit" class="button button-secondary" href="admin.html" hidden>取消编辑</a>
+            <button class="button button-primary" type="submit" id="submit-button">保存资料</button>
+          </div>
+        </div>
+      </form>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
