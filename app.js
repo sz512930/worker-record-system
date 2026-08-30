@@ -43,7 +43,10 @@
   async function updateApiStatus() {
     if (!apiStatus) return;
     try {
-      await api.health();
+      // Use the same lightweight staff API that the page needs. The aggregate
+      // health endpoint also checks RustFS, so a temporary object-storage issue
+      // should not make the registration form claim that the API is offline.
+      await api.listStaff({ sort: "newest" });
       apiStatus.textContent = "本机 API 已连接";
     } catch {
       apiStatus.textContent = "本机 API 不可用";
