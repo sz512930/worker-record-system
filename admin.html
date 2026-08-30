@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="工作人员记录表的本地管理页面。" />
+    <title>工作人员管理</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="工作人员记录表首页">
+          <span class="brand-mark" aria-hidden="true">人</span>
+          <span>
+            <strong>工作人员记录表</strong>
+            <small>前端流程验证原型</small>
+          </span>
+        </a>
+        <nav class="main-nav" aria-label="主要导航">
+          <a href="index.html">资料登记</a>
+          <a class="active" href="admin.html">人员管理</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-shell admin-page">
+      <section class="page-heading admin-heading">
+        <div>
+          <p class="eyebrow">STAFF MANAGEMENT</p>
+          <h1>工作人员管理</h1>
+          <p>查询、查看和维护保存在本机数据库中的工作人员资料。</p>
+        </div>
+        <a class="button button-primary" href="index.html">＋ 新增人员</a>
+      </section>
+
+      <section class="stats-grid" aria-label="数据概览">
+        <article class="stat-card">
+          <span>全部人员</span>
+          <strong id="total-count">0</strong>
+          <small>数据库记录总数</small>
+        </article>
+        <article class="stat-card">
+          <span>部门数量</span>
+          <strong id="department-count">0</strong>
+          <small>当前覆盖部门</small>
+        </article>
+        <article class="stat-card">
+          <span>本月新增</span>
+          <strong id="month-count">0</strong>
+          <small>按创建时间统计</small>
+        </article>
+      </section>
+
+      <section class="filter-card" aria-labelledby="filter-title">
+        <div class="card-title-row">
+          <div>
+            <h2 id="filter-title">筛选查询</h2>
+            <p>组合条件快速定位工作人员</p>
+          </div>
+          <button id="reset-filters" class="text-button" type="button">重置条件</button>
+        </div>
+        <form id="filter-form" class="filter-grid">
+          <label class="field">
+            <span>搜索姓名</span>
+            <input id="search-name" type="search" placeholder="输入姓名关键词" />
+          </label>
+          <label class="field">
+            <span>部门</span>
+            <select id="filter-department">
+              <option value="">全部部门</option>
+              <option value="行政">行政</option>
+              <option value="运营">运营</option>
+              <option value="销售">销售</option>
+              <option value="技术">技术</option>
+              <option value="设计">设计</option>
+              <option value="其他">其他</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>级别</span>
+            <select id="filter-level">
+              <option value="">全部级别</option>
+              <option value="实习">实习</option>
+              <option value="初级">初级</option>
+              <option value="中级">中级</option>
+              <option value="高级">高级</option>
+              <option value="负责人">负责人</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>性别</span>
+            <select id="filter-gender">
+              <option value="">全部性别</option>
+              <option value="男">男</option>
+              <option value="女">女</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>排序方式</span>
+            <select id="sort-by">
+              <option value="newest">最新创建</option>
+              <option value="name">姓名 A–Z</option>
+              <option value="age-asc">年龄从小到大</option>
+              <option value="age-desc">年龄从大到小</option>
+            </select>
+          </label>
+          <button class="button button-primary filter-submit" type="submit">查询</button>
+        </form>
+      </section>
+
+      <section class="table-card" aria-labelledby="list-title">
+        <div class="card-title-row table-title-row">
+          <div>
+            <h2 id="list-title">人员列表</h2>
+            <p id="result-summary">共 0 条记录</p>
+          </div>
+          <span id="api-status" class="local-badge">正在连接本机 API…</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>部门</th>
+                <th>职位</th>
+                <th>级别</th>
+                <th>城市</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="staff-table-body"></tbody>
+          </table>
+        </div>
+        <div id="empty-state" class="empty-state" hidden>
+          <span aria-hidden="true">⌕</span>
+          <h3>没有找到符合条件的记录</h3>
+          <p>请调整筛选条件，或新增一位工作人员。</p>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-name">
+      <button id="close-dialog" class="dialog-close" type="button" aria-label="关闭详情">×</button>
+      <div id="detail-content"></div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
